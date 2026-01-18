@@ -64,14 +64,19 @@ class FixedGeminiGenerator:
         
         try:
             # Try new google-genai first
-            import google.genai as genai
-            genai.configure(api_key=config.GEMINI_API_KEY)
-            self.client = genai
-            self.model_name = "gemini-1.5-flash"  # Updated model name
-            self.use_new_api = True
-            print("✅ Using new google-genai package")
-        except ImportError:
-            try:
+            class FixedGeminiGenerator:
+    def __init__(self, config):
+        self.config = config
+        try:
+            from google import genai
+            # አዲሱ አሰራር Client መጠቀም ነው
+            self.client = genai.Client(api_key=config.GEMINI_API_KEY)
+            self.model_name = "gemini-1.5-flash"
+            print("✅ Using new google-genai Client")
+        except Exception as e:
+            print(f"❌ Gemini setup error: {e}")
+            self.client = None
+
                 # Fallback to old package
                 import google.generativeai as genai
                 genai.configure(api_key=config.GEMINI_API_KEY)
