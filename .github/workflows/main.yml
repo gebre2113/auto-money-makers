@@ -33,7 +33,7 @@ jobs:
         WORDPRESS_USER: ${{ secrets.WORDPRESS_USER }}
         WORDPRESS_PASSWORD: ${{ secrets.WORDPRESS_PASSWORD }}
         TEST_MODE: ${{ secrets.TEST_MODE }}
-      run: |
+      run:
          python final_maker.py --auto
         
     - name: Upload generated content
