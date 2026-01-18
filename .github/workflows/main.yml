@@ -1,22 +1,23 @@
-name: Ultimate Money Maker
+name: Ultimate Money Maker - Fail-Safe
 
 on:
   schedule:
-    - cron: '0 14 * * *'  # 10 AM EST
-    - cron: '0 21 * * *'  # 5 PM EST
+    - cron: '0 14 * * *'
+    - cron: '0 19 * * *'
+    - cron: '0 23 * * *'
   workflow_dispatch:
 
 jobs:
-  generate-article:
+  generate-and-publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4 # ተዘምኗል
       
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5 # ተዘምኗል
       with:
         python-version: '3.11'
         
@@ -25,7 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install feedparser requests google-genai
         
-    - name: Run Money Maker
+    - name: Run Fail-Safe Money Maker
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
@@ -33,13 +34,15 @@ jobs:
         WORDPRESS_PASSWORD: ${{ secrets.WORDPRESS_PASSWORD }}
         TEST_MODE: ${{ secrets.TEST_MODE }}
       run: |
-        python final_maker.py
+        python fail_safe_maker.py --auto
         
     - name: Upload generated content
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4 # ተዘምኗል
       with:
-        name: generated-articles
+        name: money-maker-articles
         path: |
-          generated_article_*.html
+          *.html
+          *.md
+          *.txt
           automation_log.json
-        retention-days: 7
+          
