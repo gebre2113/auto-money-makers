@@ -4,4 +4,8 @@ feedparser
 requests
 pillow
 pytz
+google-genai
+requests
+feedparser
+pytz
 
