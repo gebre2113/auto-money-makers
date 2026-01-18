@@ -31,8 +31,7 @@ class FreeConfig:
     
     # === GEMINI API (FREE) ===
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSy...")  # Get from Google AI Studio
-    GEMINI_MODEL = "gemini-1.5-flash"
-  # Free tier model
+    GEMINI_MODEL = "models/gemini-1.5-flash"# Free tier model
     
     # === WORDPRESS ===
     WORDPRESS_URL = os.getenv("WORDPRESS_URL", "https://yourdomain.com/xmlrpc.php")
