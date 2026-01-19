@@ -5,3 +5,7 @@ pytz>=2023.3
 Pillow>=10.0.0
 python-wordpress-xmlrpc>=2.3
 google-generativeai>=0.3.0
+requests
+google-generativeai
+python-dotenv
+sqlite3 (usually built-in)
