@@ -1,0 +1,37 @@
+name: V7 Enterprise Daily Run
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # በየቀኑ ጠዋት 12 ሰዓት ላይ ይጀምራል
+  workflow_dispatch: # በፈለግከው ሰዓት በ "Run" በተን ለማስጀመር
+
+jobs:
+  run-enterprise-v7:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+        
+      - name: Execute Enterprise V7
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          WP_URL: ${{ secrets.WP_URL }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_PASSWORD: ${{ secrets.WP_PASSWORD }}
+        run: python ultimate_money_maker_v7.py
+        
+      - name: Save System Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: enterprise-reports
+          path: |
+            enterprise_dashboard.html
+            telemetry/
+            safety/
